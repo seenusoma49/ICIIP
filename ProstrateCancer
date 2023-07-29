@@ -1,0 +1,318 @@
+Chapter 1
+Prostate Cancer Segmentation of Peripheral Zone and Central Gland Regions in mpMRI:  Comparative Analysis with Deep Neural Network U-net and its advanced Models 
+Anil B. Gavade 1, 
+Rajendra B. Nerli2
+Pushkar Bansidhar Patil1
+Richa Ravi Siddannavar1
+Venkata Siva Prasad Bhagavatula3
+Priyanka A. Gavade4
+
+1Department of E&C, KLS Gogte Institute of Technology, Belagavi- Karnataka, India
+Email_ID: abgavade@git.edu (Corresponding Author Email ID)
+Email_ID: pushkar.patil.1020@gmail.com
+Email_ID: richasiddannavar@gmail.com
+2Department of Urology, JN Medical College, KLE Academy of Higher Education and Research, Belagavi, Karnataka, India.
+Email_ID: rajendranerli@yahoo.in
+3Medtronic, Hyderabad, India
+Email_ID: Venkata.siva.prasad.bhagavatula@medtronic.com
+4Department of Computer Science and Engineering, KLE Society's Dr. M. S. Sheshgiri College of Engineering and Technology, Belagavi- Karnataka, India
+Email_ID: Priyankagavade@klescet.ac.in
+Abstract
+Prostate cancer, a highly prevalent and significant health concern affecting men worldwide, necessitates timely detection and effective treatment. Genetic and environmental factors contribute to its development, emphasizing the importance of regular screenings and genetic testing for early diagnosis. Multiparametric magnetic resonance imaging (mpMRI) has emerged as a promising diagnostic tool for prostate cancer, enabling the identification and characterization of cancerous lesions within the peripheral zone (PZ) and central gland (CG) of the prostate. This paper proposes a novel approach utilizing deep learning-based segmentation and classification algorithms for prostate cancer analysis. The segmentation task accurately delineates the PZ and CG regions in mpMRI volumes, while the classification task differentiates between benign and malignant prostate tissues. Comparative evaluations of different deep learning architectures, including U-Net, 3D U-Net, V-Net, and nnU-Net, revealed that nnU-Net exhibited superior performance in accurately segmenting prostate cancer within the PZ and CG regions. Furthermore, the comparative analysis of deep learning-based classification frameworks highlighted ResNet-50 as the leading model with the highest accuracy. These findings demonstrate the potential of deep learning techniques, specifically nnU-Net for segmentation and ResNet-50 for classification, to improve the precision and efficiency of prostate cancer diagnosis and treatment planning using mpMRI, ultimately enhancing patient outcomes.
+Keywords: Prostate cancer, U-Net, mpMRI, Deep learning, Dice coefficient
+	Introduction
+The prostate gland is an integral part of the male reproductive system, characterized by its small, walnut-shaped structure. The prostate gland is situated beneath the bladder and positioned anteriorly to the rectum. Describing the size of a healthy adult prostate gland involves its dimensions and weight. On average, a normal adult prostate gland typically measures approximately 3 to 4 centimeters in length, 3 to 4 centimeters in width, and 2 to 3 centimeters in height. The weight of a healthy prostate gland usually ranges from 20 to 30 grams. Its primary function revolves around the production and secretion of fluid, an essential component of semen. This fluid serves the purpose of nourishing, safeguarding, and facilitating the transportation of semen during ejaculation. Additionally, the prostate gland encompasses the urethra, which is responsible for urine passage, and its muscular contractions aid in urine flow. Given its location, the prostate gland plays a vital role in male reproductive and urinary functions.
+Various factors such as age, hormonal imbalances, obesity, genetic factors, inflammation, lifestyle choices, race, ethnicity, and exposure to certain toxic environments have been suggested as potential causes of prostate gland diseases, although their direct relationship remains unproven. When the prostate gland enlarges, it can exert pressure on the urethra, resulting in the obstruction of urine flow. This can lead to urinary symptoms such as urgency, weak urine flow, difficulty initiating urination, and in some cases, urinary incontinence. It is worth noting that certain neurological conditions can also contribute to urinary incontinence, which occurs when there is an inability to control the flow of urine effectively. Importantly, not all men exposed to these risk factors develop prostate diseases, while some men without exposure to these risk factors may still experience prostate gland diseases. Therefore, regular screening, early detection, and appropriate medical care play a crucial role in managing male health and addressing any underlying conditions.
+Various prostate gland diseases include Benign Prostatic Hyperplasia (BPH), Prostatitis, Prostate cancer, Prostatic Intraepithelial Neoplasia (PIN), Prostate Abscess, and Prostate stones. Prostate cancer is characterized by the malignant growth of cells in the prostate gland and is one of the most prevalent cancers among men. Although prostate cancer may not exhibit symptoms in its early stages, it can lead to urinary symptoms, blood in the urine or semen, erectile dysfunction, and bone pain as it progresses. According to the International Agency for Research on Cancer (IARC), prostate cancer ranks as the second most commonly diagnosed cancer and the fifth leading cause of cancer-related deaths in men worldwide. Global estimates for 2020 indicate around 1.4 million new cases of prostate cancer and approximately 375,000 deaths. In India, prostate cancer constitutes about 7-10% of all cancer cases in men, and its incidence is on the rise due to changing lifestyles, improved diagnostic techniques, and increased awareness.
+The prostate gland is situated deep within the pelvis, just below the bladder, and surrounds the urethra. Due to its small size, similarity to neighboring tissues, natural variations in size among individuals, and motion artifacts caused by bladder and bowel movements during breathing, imaging the prostate gland presents challenges. X-ray imaging is insufficient for detailed visualization of soft tissues, while ultrasound imaging has limitations in capturing the posterior part of the gland. MRI is widely regarded as an effective imaging technique, although it has constraints related to patient positioning and image interpretation. PET imaging can reveal the spread of malignant tissue, and biopsy serves as another diagnostic tool for detecting cancers. Considering its ability to provide detailed soft tissue information, MRI is commonly used as the initial clinical investigation. Specialized imaging techniques such as Transrectal Ultrasound and multiparametric MRI (mpMRI) are employed for prostate imaging. In the context of this chapter, mpMRI images are utilized for the study of prostate gland images. The proposed architecture for image segmentation and classification are shown in figure 1.
+ 
+Fig. 1. mpMRI image cancer segmentation and classification  
+Deep learning techniques have been extensively explored to address the challenges posed by reading MRI images and the similarity of prostate tissue. These techniques focus on segmenting the gland and accurately classifying malignant tissue. Multiparametric MR images consist of various sequences, including T2-weighted images, which facilitate the visualization of prostate anatomy, including the central zone, peripheral zone, and transition zone, allowing for the detection of abnormalities or lesions. Another sequence is Diffusion Weighted Imaging (DWI), which provides insights into the movement of water molecules within the prostate tissue, aiding in cellular understanding. Derived from DWI, the Apparent Diffusion Coefficient (ADC) mapping quantifies water molecule movement, and lower ADC values associated with higher cellularity may indicate the presence of malignant growth. Additionally, Dynamic Contrast-Enhanced (DCE) imaging is employed to visualize blood flow to the tissue, helping detect increased blood flow and categorize lesions. The rich information present in multiparametric MRI images necessitates the use of algorithms that can accurately segment the gland despite its challenging location and size, ensuring high accuracy in classification.
+	Literature reviews
+Hassan et.al [1] proposed a novel automated classification algorithm using deep learning approaches for prostate cancer detection from ultrasound and MRI images, achieving a maximum accuracy of 97% on US images and 80% on MRI images, and further improving performance through fusion with shallow machine learning algorithms.
+Mirasol et.al [2] implemented a repeatable framework using U-Net with batch normalization to segment prostate cancer lesions from annotated apparent diffusion coefficient maps, achieving a Dice score of 0.47 (0.44-0.49).
+Fernandez-Quilez [3] explored DL algorithms tailored for limited data scenarios in prostate cancer MRI applications, including Generative Adversarial Networks (GAN) for segmentation and lesion significance classification, and Auto-encoders (AEs) to address data imbalance. The proposed AE-based framework achieved results of 73.90 DSC and 0.79 AUC.
+Zhao et.al [4] constructed DL models based on multicentre biparametric MRI (bpMRI) to diagnose clinically significant prostate cancer (csPCa), outperforming Prostate Imaging Reporting and Data System (PIRADS) assessment by expert radiologists in terms of AUC and specificity, except in one external validation cohort.
+Daneshvar et.al [5] utilized a DL detection and grading system on mpMRI of active surveillance (AS) patients to assess lesion dynamics and correlate findings with progression. Progressors showed increased high-risk lesions and disease burden, and patients with persistent high-risk lesions had a higher risk of progression.
+Zaridis et.al [6] proposed a DL-based cropping pipeline using U-net to improve prostate peripheral zone segmentation. DL-cropping significantly enhanced segmentation performance in terms of Dice score, Sensitivity, Hausdorff Distance, and Average Surface Distance for all three networks, with improvements ranging from 13% to 34%.
+Chun et.al [7] evaluated the performance of three deep learning CNN algorithms (ResNet50, InceptionV3, VGG16) in detecting prostate cancer using 620 image samples from the Cancer Imaging Archive (TCIA) data source. VGG16 achieved the highest accuracy at 95.56%, followed by ResNet50 at 86.67%, and InceptionV3 at 85.56%.
+Mehralivand et.al [8] aimed to develop a cascaded deep learning detection and classification system trained on biparametric prostate MRI using PI-RADS for assisting radiologists. The algorithm achieved 56.1% sensitivity, 62.7% Positive Predictive Value (PPV), and a false discovery rate of 37.3%. The median DSC for lesion segmentation was 0.359, and the PI-RADS classification accuracy was 30.8%.
+Ye et.al [9] proposed a prostate tumor diagnosis using the deep learning network PSP-Net+VGG16, achieving a Dice index of 91.3% for segmentation. The classification accuracy and recognition rates based on VGG16 were 87.95% and 87.33%, respectively.
+Hosseinzadeh et.al [10] designed a DL framework to predict PI-RADS≥4 lesions and Gleason>6 lesions from bi-parametric MRI (bpMRI). The DL achieved a sensitivity of 87% for PI-RADS≥4 lesion detection with an average of 1 false positive (FP) per patient and an AUC of 0.88. The sensitivity for Gleason>6 lesion detection was 85% @ 1 FP compared to a consensus panel of expert radiologists with 91% @ 0.3 FP.
+Hu et.al [11] included 396 prostate cancer patients and built two binary classification deep learning models (PM1 and PM2) and two multiclass classification deep learning models for prostate cancer grading (AM1 and AM2). The models using apparent diffusion coefficient and T2-weighted images achieved higher AUCs and κ values compared to the pretraining models (PM1 and PM2) in both the internal validation dataset and the test dataset.
+Koonamparampath et.al [12] summarized the usage of CNN in various automatic processing tasks for prostate cancer detection and diagnosis. Deep learning-based research outperformed traditional patient prognosis techniques in terms of accuracy.
+Roest et.al [13] included a multi-center dataset of 1513 patients who underwent bpMRI was used in the study. A machine learning classifier trained on prior and current study data showed higher diagnostic accuracy (AUC 0.81) compared to a model trained on the current study only (AUC 0.73). Adding clinical variables further improved diagnostic performance (AUC 0.86).
+Bleker et.al [14] used a retrospective multi-center dataset of 524 PCa lesions on bpMRI. The DLM auto-fixed VOI method for lesion segmentation achieved a significantly higher AUC (0.76) compared to manual segmentation (0.62).
+Pellicervalero et.al [15] used two different datasets, the study achieved excellent lesion-level AUC, sensitivity, and specificity for the GGG≥2 significance criterion in mpMRI testing. The model outperformed radiologists in terms of sensitivity and specificity for lesion-level and patient-level evaluation.
+Salvi et.al [16] implemented a fully automated hybrid approach for prostate gland segmentation in MR images. The method achieved excellent segmentation performance with a mean dice score of 0.851 and a Hausdorff distance of 7.55 mm.
+Künzel et.al [17] aimed to evaluate autonomous radiotherapy planning for prostate cancer cases. The clinical acceptability of each step, including organ-at-risk/target contouring and treatment planning, was assessed by five experts, resulting in acceptance rates ranging from 66% to 90% for different steps.
+Fan et.al [18] included 252 patients who underwent radical prostatectomy and MP-MRI examinations. Among six classifiers, RF performed best for different diagnostic groups, and SVM performed relatively best for a specific group. DCE features ranked first in each group's models in terms of number and importance.
+Quihui-Rubio et.al [19] trained six deep learning models were trained and compared using MRI images. The R2U-Net model achieved the best result for segmenting all zones, with Dice, Jaccard, and mean squared error scores of 0.869, 0.782, and 0.00013, respectively.
+ Jing et.al [20] Established two manual segmentation methods were established for lesion and whole prostate segmentation. A radiomics signature combining whole prostate (T2WI) and lesion (DWI) features, along with PI-RADS, outperformed subjective evaluation alone in predicting clinically significant prostate cancer, as confirmed by ROC analysis, NRI, and DCA.
+ Banerjee et.al [21] implemented an ensemble of simple networks with 3 convolutional layers and 2 fully connected layers. They achieved 72% accuracy and an AUC of 0.76 on a dataset of 40 patients. Their Q-learning agent achieved 73% accuracy and AUC of 0.73.
+ Adams et.al [22] used 158 expert annotated prostate MRIs. Their models achieved segmentation performance with DSC/HD/ASD scores of 0.88/18.3/2.2 for the central gland, 0.75/22.8/1.9 for the peripheral zone, and 0.45/36.7/17.4 for PCa.
+Li et.al [23] developed a multi-modal CNN called RMANet for discriminating prostate cancer clinical severity grade. Their model achieved an AUC of 0.84, outperforming other classical and recent methods.
+Tyagi et.al [24] utilized deep learning and computer vision in their research to improve pathology computer-aided diagnosis systems. They demonstrated the effectiveness of their approach on a fully annotated dataset.
+Twilt et.al [25] provided an overview of AI algorithms for lesion classification and detection in PCa. They found heterogeneity in cohort sizes and limited evidence for the clinical utility of PCa AI applications.
+Cipollari et.al [26] reviewed 170 mpMRI scans. Inter-reader agreement was moderate, and the detection rate of PCa was similar between an experienced and inexperienced reader.
+Hu et.al [27] conducted a retrospective investigation on 217 patients. Transfer learning from disease-related images improved the efficacy of DCNN models for prostate cancer detection.
+Collado [28] used a ResNext101 3D encoder and a Unet3D decoder for their approach. The U-Net 3D model provided the best results.
+Yin [29] investigated machine learning classifiers for each prostate zone. Ensemble algorithms worked best for PZ and TZ zones, while CNNs were best in the AS zone.
+Van Sloun et.al [30] employed deep learning for automatic segmentation of prostate zone and Transition zone using datasets from 3 different machine, achieved 0.93 as Jaccard index for automatic segmentation.
+These studies highlight the advancements in deep learning approaches for prostate cancer segmentation and classification, demonstrating improved accuracy and performance compared to traditional methods.
+	Materials
+1.3.1 Dataset Details 
+Algorithm implemented on Dell Precision Tower 5810 work station with specification Xeon CPU, 512 GB SSD, 32GB RAM, 2TB HDD and 8 GB Quadro P4000 Nvidia GPU. Datasets employed to check the performance of algorithm are as follows.
+Promise12 Dataset:
+	The PROMISE12 dataset is a freely accessible dataset created specifically for evaluating the effectiveness of prostate magnetic resonance imaging (MRI) segmentation algorithms. Its purpose is to measure the algorithms' performance in accurately segmenting both the prostate gland and its peripheral zone from multi-parametric MRI scans. 
+	Comprising T2-weighted MRI scans and corresponding ground truth segmentation masks, the dataset encompasses information obtained from 50 patients diagnosed with prostate cancer. It offers a comprehensive collection of data for researchers to analyze and develop prostate MRI segmentation algorithms.
+	Renowned for its utilization in numerous research studies, the PROMISE12 dataset serves as a widely recognized benchmark for assessing the precision and reliability of prostate MRI segmentation algorithms. Researchers rely on this dataset to evaluate and compare the accuracy and robustness of their algorithmic approaches in this domain.
+ProstateX Dataset:
+	The ProstateX dataset encompasses a compilation of multi-parametric MRI scans and clinical data related to the prostate gland, specifically targeting prostate cancer detection and diagnosis.
+	Within this dataset, one can find T2-weighted MRI, diffusion-weighted MRI, dynamic contrast-enhanced MRI, and magnetic resonance spectroscopy data. Additionally, it contains relevant information such as prostate volume, prostate-specific antigen (PSA) levels, and indications of the presence or absence of prostate cancer. 
+	The creation of the ProstateX dataset was part of the ProstateX challenge, which sought to develop computer-aided diagnosis systems based on MRI data for prostate cancer. Consequently, it serves as a valuable resource for researchers dedicated to the detection and classification of prostate cancer.
+The ProstateX dataset is divided into two distinct subsets, each serving a specific purpose:
+	Prostate3T dataset: This subset focuses on multi-parametric magnetic resonance imaging (mp-MRI) scans obtained using a 3 Tesla (3T) MRI scanner. It includes T2-weighted MRI, diffusion-weighted MRI, and dynamic contrast-enhanced MRI scans of the prostate. The primary objective of the Prostate3T dataset is to facilitate the development and evaluation of computer-aided diagnosis (CAD) algorithms for prostate cancer detection. While the specific size and contents of this subset may vary, it typically consists of a substantial number of patient cases.
+	ProstateDx dataset: This subset is dedicated to the diagnosis of prostate cancer using biopsy information. It comprises data from patients who underwent a biopsy subsequent to the mp-MRI scans. The ProstateDx dataset provides crucial details regarding the presence or absence of cancer in different biopsy cores. Its primary role lies in evaluating and validating the performance of CAD algorithms for prostate cancer diagnosis.
+1.3.2 Reference Repository Details
+Segmentation Models:
+	U-Net: The GitHub repository [39] contains an implementation of U-Net specifically designed for the PROMISE12 challenge. The challenge focuses on prostate segmentation in MRI images. The code available in the repository allows for the training and evaluation of the U-Net model on the PROMISE12 dataset.
+	3D U-Net: The GitHub repository [40] implements the 3D U-Net architecture for prostate segmentation of 3D MRI volumes. The repository includes the code for preprocessing the data, training the model, and evaluating the segmentation performance. It also provides pre-trained models and example usage scripts.
+	V-Net: The V-Net architecture for medical image segmentation tasks can be found in a GitHub repository called VNet [41] . This repository provides an implementation of the V-Net model along with code for training and testing on different datasets. It also provides pre-trained models, evaluation scripts, and instructions for usage.
+	nnU-Net: The GitHub repository [42] is dedicated to nnU-Net, an advanced deep learning framework developed for the purpose of medical image segmentation. This repository provides a comprehensive collection of code, instructions, and example notebooks to facilitate the utilization of nnU-Net for various medical image segmentation tasks. It encompasses essential components such as pre-processing techniques, model training procedures, and inference pipelines.
+Classification models: 
+For medical image classification endeavors, the GitHub repository offers an assortment of purpose-built classification models. These models are specifically designed to cater to the unique requirements of medical image classification tasks. The repository comprises of well-documented code for training and evaluating convolutional neural network (CNN)-based models on medical image datasets. Additionally, it provides pre-trained models, utilities for data preprocessing, and example scripts to facilitate usage and customization.
+	Methodology
+1.4.1 Segmentation Models
+	U-Net
+
+ 
+Fig. 2. U-net Architecture
+U-Net [31] is a deep learning framework utilized for image segmentation purposes, particularly in the biomedical domain. The original research paper titled "U-Net: Convolutional Networks for Biomedical Image Segmentation," published by Ronneberger et al. in 2015, introduced this architecture. The model architecture is shown in figure 2.
+The primary concept behind U-Net involves employing a fully convolutional neural network to directly generate a segmentation mask for input images. Unlike conventional methods that rely on pre-processing steps, feature extraction, and classification, U-Net can perform all these tasks in an end-to-end manner by learning from the data. 
+The U-Net architecture consists of the given components:
+	Contracting Path (Encoder): The U-Net architecture follows an encoder-decoder design. The encoder path captures the contextual information of the image through multiple layers of 3x3 convolutional filters, combined with 2x2 max pooling operations to extract features and reduce resolution. Each convolutional layer is followed by a rectified linear unit (ReLU) activation function to introduce non-linearity.
+	Expanding Path (Decoder): Conversely, the decoder path utilizes up-sampling layers and 3x3 convolutional filters to reconstruct the segmentation mask from the features obtained in the encoder path. Each up-sampling layer is paired with a 2x2 transpose convolutional layer that doubles the feature resolution.
+	Skip Connections: To recover the spatial information lost during the encoding process, skip connections are established between corresponding layers of the encoder and decoder paths. These connections concatenate the feature maps from both paths, enabling the decoder to utilize the spatial information from the encoder.
+	Output Layer: The final layer of the U-Net architecture is a 1x1 convolutional layer, which generates a probability map for each pixel in the input image. This map indicates the likelihood of the pixel belonging to a particular class, facilitating the segmentation task.
+Overall, U-Net efficiently handles large images while accurately performing segmentation, making it suitable for a variety of applications such as cell segmentation, road segmentation, and biomedical image segmentation. The inclusion of skip connections allows U-Net to handle objects with diverse sizes and shapes by preserving spatial information throughout the network.
+	3D-Unet
+ 
+Fig. 3. 3D U-net Architecture
+3D U-Net [32], a variation of the U-Net architecture, was proposed by Çiçek et al. in 2016 as a solution for volumetric image segmentation tasks. It specifically targets 3D medical images, which are represented as stacks of 2D slices. By directly producing a segmentation mask for 3D input volumes, 3D U-Net proves advantageous in medical image analysis. The model architecture is shown in figure 3.
+The structure of 3D U-Net closely resembles the original U-Net but with adjustments to handle 3D volumes. Notably, it employs 3D convolutional filters instead of 2D filters to enable effective processing of the volumetric data.
+ The 3D U-Net architecture encompasses the following components:
+	Contracting Path (Encoder): This stage involves multiple layers of 3x3x3 convolutional filters, followed by 2x2x2 max pooling operations, for feature extraction and resolution reduction. Each convolutional layer is accompanied by a rectified linear unit (ReLU) activation function.
+	Expanding Path (Decoder): The features obtained from the encoder path undergo up-sampling layers and 3x3x3 convolutional filters to reconstruct the segmentation mask. Each up-sampling layer is followed by a 2x2x2 transpose convolutional layer, doubling the feature resolution.
+	Skip Connections: Similar to U-Net, 3D U-Net employs skip connections between corresponding layers of the encoder and decoder paths. These connections concatenate feature maps along the depth, height, and width dimensions, facilitating the recovery of spatial information lost during the contracting path.
+	Output Layer: The final layer consists of a 1x1x1 3D convolutional layer that generates a probability map for each voxel in the input volume, indicating the likelihood of voxel classification.
+Overall, 3D U-Net presents a robust architecture for 3D volumetric image segmentation, particularly in medical image analysis. It has proven effective in various segmentation tasks. By utilizing 3D convolutional filters, 3D U-Net captures spatial information in all three dimensions, a crucial aspect for accurate segmentation in volumetric images.
+	V-Net
+ 
+Fig. 4. VNet Architecture
+V-Net [33] is a deep learning framework specifically developed for 3D image segmentation purposes. The architecture, proposed in the research article titled "V-Net: Fully Convolutional Neural Networks for Volumetric Medical Image Segmentation" by Milletari et al. in 2016, employs a fully convolutional neural network to directly generate a segmentation mask for 3D input volumes.
+Unlike traditional methods that rely on a combination of preprocessing, feature extraction, and classification, V-Net has the capability to learn and execute all these tasks seamlessly in an end-to-end manner. V-Net follows an encoder-decoder design, similar to U-Net. However, instead of employing skip connections to merge encoder and decoder features, V-Net utilizes a 3D convolutional residual network (ResNet) to facilitate information propagation throughout the network. The model architecture is shown in figure 4.
+In detail, the V-Net architecture encompasses the following components:
+	Encoding Path: The input volume undergoes multiple layers of 3D convolutional filters and max pooling operations to extract features and decrease resolution.
+	Residual Blocks: A series of residual blocks, built upon 3D convolutional layers, are employed to learn deep representations of the input volume. Each residual block comprises two convolutional layers with a skip connection that bypasses the convolutional layers.
+	Decoding Path: The features obtained from the encoding path are fed through a series of upsampling layers and 3D convolutional filters to reconstruct the segmentation mask. Each upsampling layer is followed by a 3D deconvolutional layer that enhances the feature resolution.
+	Output Layer: The final layer of the network consists of a 1x1x1 3D convolutional layer, which produces a probability map for each voxel in the input volume. This map signifies the likelihood of the voxel belonging to a specific class.
+The V-Net architecture excels in efficiently and accurately handling large 3D medical images, making it highly suitable for diverse medical image segmentation tasks such as brain tumor segmentation, liver segmentation, and lung segmentation.
+	nnU-net
+ 
+Fig. 5. nnU-net Architecture
+The nnU-Net (No New-Net) [34] is a deep learning framework specifically designed for medical image segmentation. It was introduced by Isensee et al. in their paper "nnU-Net: Self-adapting Framework for U-Net-based Medical Image Segmentation" published in 2021.
+nnU-Net aims to provide a versatile and efficient solution for medical image segmentation tasks by incorporating adaptations to the well-known U-Net architecture. The core concept of nnU-Net revolves around adaptability to different segmentation tasks and datasets. It consists of several key components, including preprocessing, the U-Net architecture, training strategy, and postprocessing. The model architecture is shown in figure 5.
+The nnU-Net architecture consists of the following components:
+	Preprocessing: In the preprocessing stage, input medical images undergo normalization and resizing to ensure consistent size and resolution. This step contributes to enhanced performance during the segmentation process.
+	U-Net Architecture: The nnU-Net architecture builds upon the U-Net, introducing modifications to further optimize performance. It splits the contracting and expanding paths into separate modules, each containing convolutional layers, batch normalization, and ReLU activation. The number of blocks and filters can be adjusted based on the complexity of the segmentation task.
+	Training: For training, nnU-Net employs a multi-stage approach. In the initial stage, a small subset of the data is used to initialize the model's weights. Subsequent stages involve training on progressively larger subsets, allowing fine-tuning and prevention of overfitting. This strategy enhances the model's generalization capabilities.
+	Postprocessing: To refine the output segmentation maps, nnU-Net applies postprocessing techniques. This step involves removing small isolated regions and ensuring a smooth and continuous final segmentation map.
+In summary, nnU-Net presents a robust and adaptable solution for medical image segmentation tasks. Its flexibility in handling different datasets and segmentation challenges makes it well-suited for a wide range of applications in the field of medical imaging. The utilization of a multi-stage training strategy and postprocessing further enhances the model's performance, establishing nnU-Net as a state-of-the-art architecture for medical image segmentation.
+1.4.2 Classification Models
+	ResNet-50
+ 
+Fig. 6. ResNet-50 Architecture
+	ResNet50 [35] revolutionized deep neural networks by introducing residual connections to combat the degradation problem. These skip or shortcut connections enable the network to learn residual mappings instead of solely focusing on learning the desired underlying mapping.  The ResNet-50 model architecture is shown in figure 6.
+	The ResNet50 architecture comprises multiple residual blocks, which act as building blocks. Each residual block consists of convolutional layers and a shortcut connection that adds the input to the output. This innovative design effectively addresses the vanishing gradient problem and facilitates training of deep networks.
+	ResNet50 stands out with its 50-layer depth, surpassing previous architectures like VGG16 or GoogLeNet. This increased depth enables more accurate feature extraction and improved representation learning, leading to exceptional performance on challenging visual recognition tasks.
+	Evidenced by its remarkable success in the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) 2015, ResNet50 surpassed human-level accuracy. Consequently, its pre-trained weights have become widely adopted for transfer learning in diverse computer vision applications. 
+	MobileNet
+ 
+Fig. 7. MobileNet Architecture
+	MobileNet [36] is specifically designed to be deployed on mobile and embedded devices that have limited computational resources. Its main objective is to achieve a balance between model size, computational efficiency, and accuracy. The MobileNet model architecture is shown in figure 7.
+	One of the key techniques employed by MobileNet is the use of depthwise separable convolutions. These convolutions break down the standard convolution into two parts: depthwise convolution, which operates on individual channels, and pointwise convolution, which combines information across channels. This factorization leads to a significant reduction in parameters and computational cost without sacrificing expressive power. 
+	By leveraging depthwise separable convolutions, MobileNet enables efficient inference on devices with restricted resources, making it well-suited for real-time applications. 
+	It is worth noting that MobileNet comes in various versions, such as MobileNetV1, MobileNetV2, and MobileNetV3, each introducing enhancements in terms of accuracy and efficiency.
+	DenseNet201
+
+ 
+Fig 1.7 DenseNet201 Architecture
+	DenseNet201 [37] is an expanded version of the original DenseNet architecture, designed to enhance the sharing and flow of features across layers. 
+	It employs direct connections between every layer in a feed-forward manner, resulting in dense connectivity that addresses the issue of vanishing gradients and promotes stronger feature propagation. 
+	To facilitate faster convergence and boost performance, DenseNet201 incorporates batch normalization and rectified linear unit (ReLU) activations. Notably, DenseNet201 demonstrates impressive performance in image classification tasks, even with fewer parameters compared to alternative architectures.
+	Its notable strengths include its ability to capture intricate features and acquire discriminative representations.
+	InceptionNetV3
+ 
+Fig. 8. InceptionNetV3 Architecture
+	InceptionNetV3 [38], also known as Inception V3, is an enhanced version of the original Inception architecture designed to enhance computational efficiency while maintaining high accuracy levels. The InceptionNetV3 model architecture is shown in the figure 8.
+	It introduces several innovative architectural elements, such as factorized convolutions, which substitute large filters with multiple smaller filters. This substitution reduces computational complexity without compromising performance.
+	To address challenges like the vanishing gradient problem and to provide regularization benefits, InceptionNetV3 incorporates auxiliary classifiers at intermediate layers during training. These additional classifiers contribute to stabilizing the training process and improving overall model performance.
+	One of the notable features of InceptionNetV3 is the utilization of inception modules. These modules consist of parallel convolutional operations with different kernel sizes. By incorporating multiple parallel operations, the network can effectively capture information at various scales, enabling the learning of both local and global features simultaneously.
+1.4.3 Algorithm
+Algorithm 1: Cancer Cell detection and classification
+		Input: mpMRI Image
+Output: Indicate predicted cancer classification
+		
+Step 1	:	Dataset (R) contains X images and Y labels. Where X ∈ R and Y ∈ R
+Step 2	:	Training set (Tr) is 80% of R. i.e., Tr = 0.80 R
+Step 3	:	Test set (Ts) is 20% of R. i.e., Ts = 0.20 R
+Step 4	:	Select batch size (B) such that B = {1, 2, 3, 4….} and number of epochs (E)
+
+Step 5	:	For i = 1 to E:
+	Randomly select xy = {x1y1, x2y2, x3y3, …, xnyn} such that |xy| = B and xy ⊆ Tr
+	Give xy as input to the model
+	Save the model if there is increment in accuracy and validation accuracy
+End for
+Step 6	:	Calculate and display dice-coefficient (for segmentation), confusion matrix and other metrices (for classification) using Ts
+		
+1.4.4 Evaluation Metrics
+A confusion matrix is a valuable tool used in machine learning and statistics to evaluate the performance of a classification model. It provides a summary of the model's predictions by comparing them with the actual labels in a set of test data. Confusion matrix shown in figure 9.
+Typically represented as a square matrix, the confusion matrix's dimensions are determined by the number of classes in the classification problem. For instance, in a binary classification scenario with classes labeled as positive (P) and negative (N), the confusion matrix would appear as follows:
+ 
+Fig.9. Confusion Matrix
+Here's a breakdown of the key components within the confusion matrix:
+True Positive (TP): This refers to the cases where the model correctly predicted the positive class (P) when the actual class was positive.
+False Negative (FN): In this case, the model incorrectly predicted the negative class (N) when the actual class was positive.
+False Positive (FP): Here, the model inaccurately predicted the positive class (P) when the actual class was negative.
+True Negative (TN): This represents the instances where the model correctly predicted the negative class (N) when the actual class was negative.
+By analyzing the distribution of correct and incorrect predictions across different classes, the confusion matrix enables the calculation and visualization of various evaluation metrics. These metrics include accuracy, precision, recall (or sensitivity), and the F1 score.
+Accuracy: This metric measures the overall correctness of the model and is calculated as 
+Accuracy=  (TP+TN)/(TP+FP+FN+TN)
+
+Precision: It quantifies the number of correctly predicted positive instances out of all predicted positive instances and is calculated as 
+Precision =  TP/(TP+FP)
+
+Recall (also known as sensitivity or true positive rate): This metric evaluates the proportion of actual positive instances that are correctly predicted as positive and is calculated as 
+Recall =TP/(TP+FN)
+F1 Score: The F1 score is a metric that balances precision and recall by taking their harmonic mean. It is calculated as twice the product of precision and recall, divided by their sum: 
+F1-Score =(2×Recall×Precision)/(Recall+Precision)
+By utilizing a confusion matrix, analysts and researchers can gain valuable insights into a model's performance and identify areas that require improvement. It is an effective means of evaluating the effectiveness of a classification model.
+	Results
+1.5.1 Segmentation Results
+	U-Net
+ 	 	 
+(a) mpMRI PCa image	(b) Ground Truth	(c) colour map of predicted cancer classification
+Fig. 10.  U-net Segmented Region
+Promise12 dataset was utilized to perform segmentation on mpMRI images of prostate cancer. Using the U-Net model, a deep learning methodology was utilized to accurately outline the regions of interest within the images. The batch size was set to 2 and epochs to 150. After 150 epochs, the following parameters were achieved: a loss of 0.0026, an accuracy of 0.9991, a validation loss of 0.0329, and a validation accuracy of 0.9927. These hyperparameter choices were crucial in achieving the obtained Dice coefficient of 0.913. Implementation results are shown in figure 10.
+	3D U-Net
+ 	 	 
+(a) mpMRI PCa Image	(b) Ground Truth	(c) Prediction
+Fig.11 3D U-Net Segmented Region
+ProstateX dataset was used as the basis for segmenting prostate cancer mpMRI images using the 3D U-Net model. To optimize the model's learning capabilities and enable efficient parameter updates, a batch size of 3 was chosen during training. The model underwent an extensive training process encompassing 15000 epochs, allowing for iterative improvements in its predictions. The outcomes were highly impressive, achieving a dice coefficient of 0.926. These results unequivocally showcased the exceptional accuracy and performance of the 3D U-Net model in precisely delineating the regions of interest in prostate cancer mpMRI images. This accomplishment underscores the potential of the 3D U-Net architecture for clinical applications, offering promising prospects in the field. Implementation results are shown in figure 11.
+	V-Net
+ 	 	 
+(a) mpMRI PCa image	(b) Ground Truth	(c) Prediction
+Fig. 12 3D V-Net Segmented Region
+The Promise12 dataset was employed to conduct segmentation on mpMRI images of prostate cancer using the V-Net model. During training, a batch size of 4 was utilized, allowing the model to process and update its parameters using a larger batch of data simultaneously. The training phase encompassed 100 epochs, ensuring multiple iterations of the entire dataset to enhance the model's predictions. Notably, the outcomes achieved demonstrated exceptional performance, with a Dice coefficient of 0.926. This coefficient signifies a strong agreement between the predicted segmentations and the ground truth, affirming the V-Net model's capacity to accurately delineate relevant areas in the mpMRI images of prostate cancer. Implementation results are shown in figure 10.
+	nnU-Net
+Top View	 	 	 
+Lateral View	 	 	 
+	(a) mpMRI PCa image	(b) Ground Truth	(c) Prediction
+Fig.13. nnU-net Segmented Region
+The research project focused on the application of the nnU-Net model to segment mpMRI prostate scans, aiming to accurately identify regions associated with prostate cancer. The nnU-Net model had undergone pretraining to enhance its performance prior to the study. The main objective was to achieve precise delineation of cancerous areas in the images. Notably, the nnU-Net model outperformed other models utilized in the research, demonstrating the highest level of accuracy. With a remarkable dice coefficient of 0.951, the model exhibited a strong agreement between its predicted segmentations and the ground truth. These findings underscore the efficacy of leveraging pretrained models and emphasize the immense potential of the nnU-Net architecture in advancing prostate cancer segmentation tasks. The outcomes of this research hold significant implications for enhancing the diagnosis and treatment of prostate cancer through the utilization of mpMRI scans.
+Table 1. Comparative analysis of automated segmentation using Dice-coefficient
+Model	U-net	3D U-net	V-net	nnU-net
+Dice-coefficient	0.913	0.926	0.949	0.951
+No of epoch	150	15,000	100	1000
+Time to process (hours)
+*Pretrained model used	2.58	9.25	20	
+*X
+The dataset tested for four different automated segmentation models U-net, 3D U-net,V-net and nnU-net. The performance of implementation is accessed with parameter Dice-coefficient, number of epoch and processing time. Table 1, shows the comparative analysis of automated segmentation using Dice-coefficient and nnU-net outperforms other techniques.  
+1.5.2 Classification Results
+	ResNet50
+
+ 	
+
+(a)	(b)
+Figure 6. Performance analysis (a) ResNet-50 Model Parameters b) Performance of ResNet50
+
+ResNet50 was employed as one of the models to classify mpMRI scans of the prostate into malignant (cancerous) and benign (non-cancerous) categories. The dataset used in this study consisted of 2160 images, which were divided into training and test sets. With a batch size of 16, ResNet50 underwent training and evaluation. The final results indicated an accuracy of 0.828. The precision and recall for classifying benign samples were 0.54 and 0.57, respectively, resulting in an F1-score of 0.70. For the malignant class, ResNet50 achieved a precision of 0.41, a recall of 0.61, and an F1-score of 0.48. These findings highlight the model's ability to effectively differentiate between cancerous and non-cancerous mpMRI scans, although its performance varied between the two classes.
+	MobileNet
+ 	
+
+(a)	(b)
+Figure 6. Performance analysis (a) MobileNet Model Parameters b) Performance of MobileNet
+
+MobileNet, another model utilized in the study, was employed to classify mpMRI scans into malignant and benign categories. Similar to ResNet50, the dataset was divided into training and test sets, and the model was trained with a batch size of 16. The final evaluation revealed an accuracy of 0.818. MobileNet achieved a precision of 0.58 and a recall of 0.60 for classifying benign samples, resulting in an F1-score of 0.66. For the malignant class, the model achieved a precision of 0.52, a recall of 0.62, and an F1-score of 0.56. These results demonstrate MobileNet's ability to accurately classify cancerous and non-cancerous mpMRI scans, indicating promising performance for this classification task.
+	DenseNet201
+
+ 	
+
+(a)	(b)
+Figure 6. Performance analysis (a) DenseNet201 Model Parameters b) Performance of DenseNet201MobileNet
+DenseNet201, another model used in the research, aimed to classify mpMRI scans into malignant and benign categories. Trained with a batch size of 5 using the dataset of 2160 images, DenseNet201 achieved an accuracy of 0.809. The precision and recall for classifying benign samples were 0.58 and 0.62, respectively, resulting in an F1-score of 0.68. For the malignant class, the model achieved a precision of 0.51, a recall of 0.63, and an F1-score of 0.56. These findings highlight DenseNet201's potential in accurately distinguishing between cancerous and non-cancerous mpMRI scans, although its performance varied slightly between the two classes.
+	InceptionV3
+ 	
+
+(a)	(b)
+
+Figure 6. Performance analysis (a) InceptionNetv3 Model Parameters b) Performance of InceptionNetv3
+InceptionV3, the final model used in the study, was employed to classify mpMRI scans into malignant and benign categories. Trained with a batch size of 16 using the dataset of 2160 images, InceptionV3 achieved an accuracy of 0.819. The precision and recall for classifying benign samples were 0.57 and 0.59, respectively, resulting in an F1-score of 0.62. For the malignant class, the model achieved a precision of 0.54, a recall of 0.59, and an F1-score of 0.56. These results demonstrate InceptionV3's potential in accurately classifying cancerous and non-cancerous mpMRI scans, with relatively consistent performance for both classes.
+Table 2. Comparative analysis of classification model
+ Model Performance
+Model Name	Accuracy	Precision	Recall	F1-score
+		Benign	Malignant	Benign	Malignant	Benign	Malignant
+ResNet-50	0.828	0.54	0.57	0.70	0.41	0.61	0.48
+MobileNet	0.818	0.58	0.60	0.66	0.52	0.62	0.56
+DenseNet201	0.809	0.58	0.62	0.68	0.51	0.63	0.56
+InceptionV3	0.819	0.57	0.59	0.62	0.54	0.59	0.56
+Table 2, shows the comparative analysis of four classification models used to classify the mpMRI as benign and malignant. The classification performance of algorithms accessed with parameters accuracy, precision, recall and F1-score, CNN ResNet-50 classification model outperforms other models. 
+1.4 Conclusion
+The comparative analysis of deep neural network architectures for prostate region segmentation and classification in multi-parametric magnetic resonance imaging (mpMRI) provides valuable insights into their performance and potential applications in prostate cancer diagnosis and treatment. The evaluated segmentation models, including U-Net, V-Net, 3D U-Net, and nnUNet, showcased varying levels of accuracy in delineating the peripheral zone and central gland regions of the prostate. Similarly, the classification models, ResNet50, MobileNet, DenseNet201, and InceptionNetV3, exhibited comparable abilities in distinguishing between benign and malignant tumors. These findings highlight the significance of deep learning techniques in improving the precision and effectiveness of prostate cancer analysis using mpMRI. Further advancements in this field have the potential to enhance diagnosis accuracy, assist in treatment planning, and ultimately contribute to improved patient outcomes. Continued research and development in deep learning methodologies are crucial for unlocking the full potential of these models in prostate cancer management.
+Scope for Future Work
+The future of AI in prostate cancer analysis through segmentation and classification holds great promise. Advancements in AI technologies, such as deep learning and convolutional neural networks, can improve accuracy and efficiency in detecting prostate cancer, enabling early diagnosis and intervention for better patient outcomes. Integrating AI with multimodal data and refining existing models like nnU-Net and ResNet-50 can further enhance performance. Continued research aims to revolutionize prostate cancer diagnosis and treatment, leading to improved precision and personalized care.
+Bibliography
+	Hassan, Md Rafiul, Md Fakrul Islam, Md Zia Uddin, Goutam Ghoshal, Mohammad Mehedi Hassan, Shamsul Huda, and Giancarlo Fortino. "Prostate cancer classification from ultrasound and MRI images using deep learning based Explainable Artificial Intelligence." Future Generation Computer Systems 127 (2022): 462-472.
+	Mirasol, Ian Vincent O., Patricia Angela R. Abu, and Rosula SJ Reyes. "Construction of a Repeatable Framework for Prostate Cancer Lesion Binary Semantic Segmentation using Convolutional Neural Networks."
+	Fernandez-Quilez, Alvaro. "Deep learning for an improved diagnostic pathway of prostate cancer in a small multi-parametric magnetic resonance data regime." (2022).
+	Zhao, Litao, Jie Bao, Xiaomeng Qiao, Pengfei Jin, Yanting Ji, Zhenkai Li, Ji Zhang et al. "A Deep Learning Approach for Predicting Clinically Significant Prostate Cancer: A Retrospective, Multicentre Study." (2022).
+	Daneshvar, Michael, Stephanie Harmon, Tim Phelps, Michael Rothberg, Jacob Enders, Nitin Yerram, Luke O'Connor et al. "Deep Learning Based Assessment Of Prostate Lesion Dynamics On Multiparametric Mri During Active Surveillance." In Journal Of Urology, Vol. 207, No. 5, Pp. E685-E685. Two Commerce Sq, 2001 Market St, Philadelphia, Pa 19103 Usa: Lippincott Williams & Wilkins, 2022.
+	Zaridis, Dimitris, Eugenia Mylona, Nikolaos Tachos, Kostas Marias, Manolis Tsiknakis, and Dimitios Fotiadis. "A smart cropping pipeline to improve prostate’s peripheral zone segmentation on MRI using Deep Learning." EAI Endorsed Transactions on Bioengineering and Bioinformatics 1, no. 4 (2022).
+	Chun, Chin Wai, Naeem Th Yousir, Shaymaa Mohammed Abdulameer, Salama A. Mostafa, and Abdulkareem A. Hezam. "Deep Learning Approach for Predicting Prostate Cancer from MRI Images." Journal of Soft Computing and Data Mining 3, no. 2 (2022): 1-9.
+	Mehralivand, Sherif, Dong Yang, Stephanie A. Harmon, Daguang Xu, Ziyue Xu, Holger Roth, Samira Masoudi et al. "A cascaded deep learning–based artificial intelligence algorithm for automated lesion detection and classification on biparametric prostate magnetic resonance imaging." Academic Radiology 29, no. 8 (2022): 1159-1168.
+	Ye, Li-Yin, Xiao-Yan Miao, Wan-Song Cai, and Wan-Jiang Xu. "Medical image diagnosis of prostate tumor based on PSP-Net+ VGG16 deep learning network." Computer Methods and Programs in Biomedicine 221 (2022): 106770.
+	Hosseinzadeh, Matin, Anindo Saha, Patrick Brand, Ilse Slootweg, Maarten de Rooij, and Henkjan Huisman. "Deep learning–assisted prostate cancer detection on bi-parametric MRI: minimum training data size requirements and effect of prior knowledge." European radiology 32, no. 4 (2022): 2224-2234.
+	Hu, Lei, Da-Wei Zhou, Xiang-Yu Guo, Wen-Hao Xu, Li-Ming Wei, and Jun-Gong Zhao. "Adversarial training for prostate cancer classification using magnetic resonance imaging." Quantitative Imaging in Medicine and Surgery 12, no. 6 (2022): 3276-3287.
+	Koonamparampath, Merlyn, Raj Shah, Mahipal Sundvesha, and Meena Ugale. "A Review on Prostate Cancer Detection using CNN."
+	Roest, Christian, T. C. Kwee, A. Saha, J. J. Fütterer, Derya Yakar, and H. Huisman. "AI-assisted biparametric MRI surveillance of prostate cancer: feasibility study." European Radiology (2022): 1-8.
+	Bleker, Jeroen, Thomas C. Kwee, Dennis Rouw, Christian Roest, Jaap Borstlap, Igle Jan de Jong, Rudi AJO Dierckx, Henkjan Huisman, and Derya Yakar. "A deep learning masked segmentation alternative to manual segmentation in biparametric MRI prostate cancer radiomics." European Radiology (2022): 1-10.
+	Pellicer-Valero, Oscar J., José L. Marenco Jiménez, Victor Gonzalez-Perez, Juan Luis Casanova Ramón-Borja, Isabel Martín García, María Barrios Benito, Paula Pelechano Gómez, José Rubio-Briones, María José Rupérez, and José D. Martín-Guerrero. "Deep Learning for fully automatic detection, segmentation, and Gleason Grade estimation of prostate cancer in multiparametric Magnetic Resonance Images." Scientific reports 12, no. 1 (2022): 1-13.
+	Salvi, Massimo, Bruno De Santi, Bianca Pop, Martino Bosco, Valentina Giannini, Daniele Regge, Filippo Molinari, and Kristen M. Meiburger. "Integration of Deep Learning and Active Shape Models for More Accurate Prostate Segmentation in 3D MR Images." Journal of Imaging 8, no. 5 (2022): 133.
+	Künzel, Luise A., Marcel Nachbar, Markus Hagmüller, Cihan Gani, Simon Boeke, Daniel Wegener, Frank Paulsen, Daniel Zips, and Daniela Thorwarth. "Clinical evaluation of autonomous, unsupervised planning integrated in MR-guided radiotherapy for prostate cancer." Radiotherapy and Oncology 168 (2022): 229-233.
+	Fan, Xuhui, Ni Xie, Jingwen Chen, Tiewen Li, Rong Cao, Hongwei Yu, Meijuan He et al. "Multiparametric MRI and Machine Learning Based Radiomic Models for Preoperative Prediction of Multiple Biological Characteristics in Prostate Cancer." Frontiers in oncology 12 (2022).
+	Quihui-Rubio, Pablo Cesar, Gilberto Ochoa-Ruiz, Miguel Gonzalez-Mendoza, Gerardo Rodriguez-Hernandez, and Christian Mata. "Comparison of automatic prostate zones segmentation models in MRI images using U-net-like architectures." In Mexican International Conference on Artificial Intelligence, pp. 282-296. Springer, Cham, 2022.
+	Jing, Guodong, Pengyi Xing, Zhihui Li, Xiaolu Ma, Haidi Lu, Chengwei Shao, Yong Lu, Jianping Lu, and Fu Shen. "Prediction of clinically significant prostate cancer with a multimodal MRI-based radiomics nomogram." Frontiers in Oncology 12 (2022): 918830.
+	Pin, Nattapoom Asavareongchai Mike Phulsuksombati Pin, and Tea-mangkornpan Imon Banerjee. "Multiparametric MR Image Analysis for Prostate Cancer Assessment with Convolutional Neural Networks."
+	Adams, Lisa C., Marcus R. Makowski, Günther Engel, Maximilian Rattunde, Felix Busch, Patrick Asbach, Stefan M. Niehues et al. "Prostate158-An expert-annotated 3T MRI dataset and algorithm for prostate cancer detection." Computers in Biology and Medicine 148 (2022): 105817.
+	Li, Bochong, Ryo Oka, Ping Xuan, Yuichiro Yoshimura, and Toshiya Nakaguchi. "Robust multi-modal prostate cancer classification via feature autoencoder and dual attention." Informatics in Medicine Unlocked 30 (2022): 100923.
+	Tyagi, Shobha, Neha Tyagi, Amarendranath Choudhury, Gauri Gupta, Musaddak Maher Abdul Zahra, and Saima Ahmed Rahin. "Identification and classification of prostate cancer identification and classification based on improved convolution neural network." BioMed Research International 2022 (2022).
+	Twilt, Jasper J., Kicky G. van Leeuwen, Henkjan J. Huisman, Jurgen J. Fütterer, and Maarten de Rooij. "Artificial intelligence based algorithms for prostate cancer classification and detection on magnetic resonance imaging: a narrative review." Diagnostics 11, no. 6 (2021): 959.
+	Cipollari, Stefano, Martina Pecoraro, Alì Forookhi, Ludovica Laschena, Marco Bicchetti, Emanuele Messina, Sara Lucciola, Carlo Catalano, and Valeria Panebianco. "Biparametric prostate MRI: impact of a deep learning-based software and of quantitative ADC values on the inter-reader agreement of experienced and inexperienced readers." La radiologia medica 127, no. 11 (2022): 1245-1253.
+	Hu, Bo, Lin-Feng Yan, Yang Yang, Ying Yu, Qian Sun, Jin Zhang, Hai-Yan Nan et al. "Classification of Prostate Transitional Zone Cancer and Hyperplasia Using Deep Transfer Learning From Disease-Related Images." Cureus 13, no. 3 (2021).
+	Collado, Carlos Nácher. "Comprehensive study of good model training for prostate segmentation in volumetric MRI." arXiv preprint arXiv:2208.13671 (2022).
+	Yin, Haoli, and Nithin Buduma. "Prostate Lesion Detection and Salient Feature Assessment Using Zone-Based Classifiers." arXiv preprint arXiv:2208.11522 (2022).
+	van Sloun, Ruud JG, Rogier R. Wildeboer, Christophe K. Mannaerts, Arnoud W. Postema, Maudy Gayet, Harrie P. Beerlage, Georg Salomon, Hessel Wijkstra, and Massimo Mischi. "Deep learning for real-time, automatic, and scanner-adapted prostate (zone) segmentation of transrectal ultrasound, for example, magnetic resonance imaging–transrectal ultrasound fusion prostate biopsy." European urology focus 7, no. 1 (2021): 78-85.
+	Ronneberger, Olaf, Philipp Fischer, and Thomas Brox. "U-net: Convolutional networks for biomedical image segmentation." In Medical Image Computing and Computer-Assisted Intervention–MICCAI 2015: 18th International Conference, Munich, Germany, October 5-9, 2015, Proceedings, Part III 18, pp. 234-241. Springer International Publishing, 2015.
+	Çiçek, Özgün, Ahmed Abdulkadir, Soeren S. Lienkamp, Thomas Brox, and Olaf Ronneberger. "3D U-Net: learning dense volumetric segmentation from sparse annotation." In Medical Image Computing and Computer-Assisted Intervention–MICCAI 2016: 19th International Conference, Athens, Greece, October 17-21, 2016, Proceedings, Part II 19, pp. 424-432. Springer International Publishing, 2016.
+	Milletari, Fausto, Nassir Navab, and Seyed-Ahmad Ahmadi. "V-net: Fully convolutional neural networks for volumetric medical image segmentation." In 2016 fourth international conference on 3D vision (3DV), pp. 565-571. Ieee, 2016.
+	Isensee, Fabian, Paul F. Jaeger, Simon AA Kohl, Jens Petersen, and Klaus H. Maier-Hein. "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation." Nature methods 18, no. 2 (2021): 203-211.
+	He, Kaiming, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. "Deep residual learning for image recognition." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 770-778. 2016.
+	Howard, Andrew G., Menglong Zhu, Bo Chen, Dmitry Kalenichenko, Weijun Wang, Tobias Weyand, Marco Andreetto, and Hartwig Adam. "Mobilenets: Efficient convolutional neural networks for mobile vision applications." arXiv preprint arXiv:1704.04861 (2017).
+	Huang, Gao, Zhuang Liu, Laurens Van Der Maaten, and Kilian Q. Weinberger. "Densely connected convolutional networks." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 4700-4708. 2017.
+	Szegedy, Christian, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich. "Going deeper with convolutions." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 1-9. 2015.
+	IA92. n.d. PROMISE12_OptUNet. [Online]. GitHub. Available at: https://github.com/IA92/PROMISE12_OptUNet (Accessed: March 23, 2023).
+	jancio. (n.d.). 3D-U-Net-Prostate-Segmentation. [GitHub Repository]. Retrieved March 23, 2023, from https://github.com/jancio/3D-U-Net-Prostate-Segmentation
+	junqiangchen. (n.d.). VNet. [GitHub Repository]. Retrieved March 23, 2023, from https://github.com/junqiangchen/VNet
+	MIC-DKFZ. (n.d.). nnUNet: nnunetv1 branch. [GitHub Repository]. Retrieved March 23, 2023, from https://github.com/MIC-DKFZ/nnUNet/tree/nnunetv1
+	AthiraNirmal. (n.d.). Brain Cancer_Detection.ipynb. [GitHub Repository]. Retrieved March 23, 2023, from https://github.com/AthiraNirmal/Medical-Image-Classification-/blob/main/Brain%20Cancer_Detection.ipynb
